@@ -1,0 +1,31 @@
+-- S1
+SET SESSION CHARACTERISTICS AS TRANSACTION ISOLATION LEVEL READ COMMITTED;
+
+-- S2
+SET SESSION CHARACTERISTICS AS TRANSACTION ISOLATION LEVEL READ COMMITTED;
+
+-- S1
+BEGIN;
+
+-- S2
+BEGIN;
+
+-- S1
+SELECT SUM(rating)
+FROM pizzeria;
+
+-- S2
+INSERT INTO pizzeria (id, name, rating) VALUES (10, 'Kazan Pizza', 5);
+
+COMMIT;
+
+-- S1
+SELECT SUM(rating) FROM pizzeria;
+
+COMMIT;
+
+-- S1
+SELECT SUM(rating) FROM pizzeria;
+
+-- S2
+SELECT SUM(rating) FROM pizzeria;
